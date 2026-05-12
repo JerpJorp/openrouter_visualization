@@ -47,16 +47,6 @@ export class App implements OnInit {
   // ag-grid configs
   theme = themeBalham.withPart(colorSchemeDark);
   colDefs: ColDef[] = [
-    { field: 'id', headerName: 'Model', sortable: true, filter: true },
-    { field: 'context_length', headerName: 'Context', sortable: true, filter: 'agNumberColumnFilter' },
-    {
-      field: 'outputCost',
-      headerName: 'output$',
-      sortable: true,
-      filter: 'agNumberColumnFilter',
-      valueFormatter: (params) => params.value != null ? `$${params.value.toFixed(2)}` : ''
-    },
-    { field: 'createdDate', headerName: 'created', sortable: true, filter: true },
     {
       headerName: 'Actions',
       cellRenderer: (params: any) => {
@@ -78,7 +68,17 @@ export class App implements OnInit {
         container.appendChild(linkBtn);
         return container;
       }
-    }
+    },
+    { field: 'id', headerName: 'Model', sortable: true, filter: true },
+    { field: 'context_length', headerName: 'Context', sortable: true, filter: 'agNumberColumnFilter' },
+    {
+      field: 'outputCost',
+      headerName: 'output$',
+      sortable: true,
+      filter: 'agNumberColumnFilter',
+      valueFormatter: (params) => params.value != null ? `$${params.value.toFixed(2)}` : ''
+    },
+    { field: 'createdDate', headerName: 'created', sortable: true, filter: true },
   ];
 
   defaultColDef: ColDef = {
