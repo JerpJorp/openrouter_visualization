@@ -1,0 +1,71 @@
+<div class="container">
+  <header>
+    <h1>OpenRouter Models Visualization</h1>
+  </header>
+
+  <div class="content">
+    <!-- 1. Filters panel -->
+    <div class="panel filters-panel">
+      <div class="filter-group">
+        <label>Context Length ({{ minContext }} - {{ maxContext }})</label>
+        <div class="slider-row">
+          <input type="range" [min]="globalMinContext" [max]="globalMaxContext" [(ngModel)]="minContext"
+            (ngModelChange)="applyFilters()">
+          <input type="range" [min]="globalMinContext" [max]="globalMaxContext" [(ngModel)]="maxContext"
+            (ngModelChange)="applyFilters()">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Output Cost ({{ minCost | number:'1.2-2' }} - {{ maxCost | number:'1.2-2' }})</label>
+        <div class="slider-row">
+          <input type="range" [min]="0" [max]="100" step="0.1" [(ngModel)]="sliderMinCost"
+            (ngModelChange)="onCostSliderChange()">
+          <input type="range" [min]="0" [max]="100" step="0.1" [(ngModel)]="sliderMaxCost"
+            (ngModelChange)="onCostSliderChange()">
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Created Date ({{ formatDate(minEpoch) }} - {{ formatDate(maxEpoch) }})</label>
+        <div class="slider-row">
+          <input type="range" [min]="globalMinEpoch" [max]="globalMaxEpoch" [(ngModel)]="minEpoch"
+            (ngModelChange)="applyFilters()">
+          <input type="range" [min]="globalMinEpoch" [max]="globalMaxEpoch" [(ngModel)]="maxEpoch"
+            (ngModelChange)="applyFilters()">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel chart-panel">
+      <ngx-charts-bubble-chart style="width: 100%; height: 50vh;" [scheme]="colorScheme" [results]="chartData()"
+        [xAxis]="showXAxis" [yAxis]="showYAxis" [autoScale]="true" [legend]="showLegend" [scheme]="colorScheme"
+        [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel" [minRadius]="minRadius" [maxRadius]="maxRadius">
+
+        <ng-template #tooltipTemplate let-model="model">
+          <div class="custom-tooltip">
+            <strong>{{ model.name }}</strong>
+            <p>Context: {{ model.tooltipContext }}</p>
+            <p>Output $: {{ model.tooltipCost | number:'1.2-2' }}</p>
+            <p>Date: {{ model.tooltipDate }}</p>
+          </div>
+        </ng-template>
+
+      </ngx-charts-bubble-chart>
+    </div>
+
+    <div class="panel table-panel">
+      <ag-grid-angular style="width: 100%; height: 50vh;" [theme]="theme" [rowData]="models()" [columnDefs]="colDefs"
+        [defaultColDef]="defaultColDef" [enableCellTextSelection]="true">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+</div>
+
+<dialog #modelDialog>
+  <div class="modal-header">
+    <h2>Model Details</h2>
+    <button class="close-btn" (click)="closeModal()">×</button>
+  </div>
+  <pre>{{ selectedModelJson() }}</pre>
+</dialog>

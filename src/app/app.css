@@ -1,0 +1,145 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+header {
+    margin-bottom: 24px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Full width for everything on mobile */
+    gap: 24px;
+    flex: 1;
+}
+
+@media (min-width: 768px) {
+    .content {
+        grid-template-columns: 1fr 1fr;
+        /* Two columns on desktop */
+    }
+
+    .filters-panel {
+        grid-column: 1 / -1;
+        /* Spans all columns (full width) */
+    }
+
+    .chart-panel {
+        grid-column: 1 / 2;
+        /* Takes the right half */
+    }
+
+    .table-panel {
+        grid-column: 2 / 3;
+        /* Takes the left half */
+    }
+}
+
+.panel {
+    background: white;
+    /* user changed this manually earlier */
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.filters-panel {}
+
+.chart-panel {
+    align-items: center;
+    justify-content: center;
+}
+
+.table-panel {
+    /* specific styles if any */
+}
+
+/* Filters */
+.filters-panel h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    color: #818cf8;
+}
+
+.filter-group {
+    margin-bottom: 12px;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.slider-row {
+    display: flex;
+    gap: 12px;
+}
+
+.slider-row input[type="range"] {
+    flex: 1;
+    accent-color: #38bdf8;
+}
+
+/* Tooltip and Modal */
+.custom-tooltip {
+    background: #1e293b;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    color: #f8fafc;
+    font-size: 0.875rem;
+}
+
+.custom-tooltip strong {
+    color: #38bdf8;
+    display: block;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.custom-tooltip p {
+    margin: 4px 0;
+}
+
+::ng-deep .show-btn {
+    background: linear-gradient(135deg, #38bdf8, #2563eb);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+::ng-deep .show-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+}
+
+::ng-deep .show-btn:active {
+    transform: translateY(1px);
+}
