@@ -1,59 +1,81 @@
-# OpenrouterApp
+# OpenRouter Visualization
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.8.
+A modern web application for visualizing and exploring the vast landscape of AI models available through [OpenRouter](https://openrouter.ai/).
 
-## Development server
+## Overview
 
-To start a local development server, run:
+OpenRouter Visualization provides an interactive dashboard to compare AI models across key metrics such as pricing, context window, and release dates. It helps developers and researchers make informed decisions about which models best suit their needs and budget.
 
+## Key Features
+
+- **Interactive Model Table**: A powerful, sortable, and filterable table using `ag-grid` to browse all available OpenRouter models.
+    - View model IDs, context length, output pricing, and creation dates.
+    - Quick access to raw model metadata via a modal view.
+- **Dynamic Bubble Chart**: Visualize the model landscape using `ngx-charts`.
+    - **X-axis**: Normalized release date (Timeline).
+    - **Y-axis**: Log-scaled output cost (Price).
+    - **Bubble Size**: Context length (Capacity).
+- **Advanced Filtering**: Fine-tune your view by filtering models based on:
+    - Context length ranges.
+    - Pricing (with a non-linear slider for better control over price skews).
+    - Release date ranges.
+
+## Tech Stack
+
+- **Framework**: [Angular](https://angular.dev/) (Standalone components, Zoneless change detection)
+- **Table Component**: [ag-grid-angular](https://www.ag-grid.com/angular-data-grid/)
+- **Charts**: [@swimlane/ngx-charts](https://swimlane.github.io/ngx-charts/)
+- **Styling**: Vanilla CSS with dark mode support.
+- **Data Source**: [OpenRouter API](https://openrouter.ai/api/v1/models)
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (latest LTS recommended)
+- [npm](https://www.npmjs.com/)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd openrouter-visualization
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Development
+
+Start the local development server:
 ```bash
-ng serve
+npm start
+```
+Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+### Building
+
+Build the project for production:
+```bash
+npm run build
+```
+The build artifacts will be stored in the `dist/` directory.
+
+### Testing
+
+Run unit tests with [Vitest](https://vitest.dev/):
+```bash
+npm test
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## License
 
-## Code scaffolding
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details (if applicable).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Acknowledgments
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Data provided by [OpenRouter](https://openrouter.ai/).
+- Built with the powerful [Angular CLI](https://github.com/angular/angular-cli).
