@@ -60,11 +60,23 @@ export class App implements OnInit {
     {
       headerName: 'Actions',
       cellRenderer: (params: any) => {
-        const btn = document.createElement('button');
-        btn.innerText = 'Show';
-        btn.className = 'show-btn';
-        btn.onclick = () => this.showModal(params.data);
-        return btn;
+        const container = document.createElement('div');
+        container.style.display = 'flex';
+        container.style.gap = '8px';
+
+        const showBtn = document.createElement('button');
+        showBtn.innerText = 'Show';
+        showBtn.className = 'show-btn';
+        showBtn.onclick = () => this.showModal(params.data);
+
+        const linkBtn = document.createElement('button');
+        linkBtn.innerText = 'Link';
+        linkBtn.className = 'show-btn';
+        linkBtn.onclick = () => window.open(`https://openrouter.ai/${params.data.id}`, '_blank');
+
+        container.appendChild(showBtn);
+        container.appendChild(linkBtn);
+        return container;
       }
     }
   ];
@@ -192,7 +204,10 @@ export class App implements OnInit {
 
     this.models.set(filtered);
 
-    const series = filtered.map(m => {
+    const groups: { [key: string]: any[] } = {};
+
+    filtered.forEach(m => {
+      const groupName = m.id.split('/')[0];
       let epochNormalized = 0;
       if (!isNaN(m.created)) {
         epochNormalized = (m.created - this.globalMinEpoch) / this.epochRange;
@@ -200,7 +215,11 @@ export class App implements OnInit {
 
       const contextLen = m.context_length > 0 ? m.context_length / 100 : 0;
 
-      return {
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+
+      groups[groupName].push({
         name: m.id,
         x: epochNormalized,
         y: Math.log10(m.outputCost == 0 ? 0.0000001 : m.outputCost),
@@ -208,15 +227,15 @@ export class App implements OnInit {
         tooltipContext: m.context_length,
         tooltipCost: m.outputCost,
         tooltipDate: m.createdDate
-      };
+      });
     });
 
-    this.chartData.set([
-      {
-        name: 'Models',
-        series: series
-      }
-    ]);
+    const groupedChartData = Object.keys(groups).map(groupName => ({
+      name: groupName,
+      series: groups[groupName]
+    }));
+
+    this.chartData.set(groupedChartData);
   }
 
   formatDate(epoch: number): string {
