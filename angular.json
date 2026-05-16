@@ -29,6 +29,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/openrouter_vis/",
               "budgets": [
                 {
                   "type": "initial",
